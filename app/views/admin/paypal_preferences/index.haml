@@ -25,11 +25,6 @@
 
   .row
     .col-12
-      =t("admin.paypal_accounts.marketplace_currency_used", currency: "<strong>#{currency}</strong>",
-        contact_support_link: link_to(t("admin.paypal_accounts.contact_support_link_text"), "mailto:support@sharetribe.com")).html_safe
-
-  .row
-    .col-12
       =t("admin.paypal_accounts.integration_info_text").html_safe
 
   - if display_knowledge_base_articles
