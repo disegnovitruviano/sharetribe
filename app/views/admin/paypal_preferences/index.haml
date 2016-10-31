@@ -65,7 +65,7 @@
               .col-6
                 = form.label :marketplace_currency, t("admin.paypal_accounts.marketplace_currency_label"), class: "paypal-horizontal-input-label"
               .col-6
-                = form.select :marketplace_currency, [currency]
+                = form.select :marketplace_currency, available_currencies
 
             .row
               .col-6

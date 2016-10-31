@@ -61,6 +61,9 @@ class Admin::PaypalPreferencesController < ApplicationController
       admin_getting_started_guide_path,
       Admin::OnboardingWizard.new(@current_community.id).setup_status)
 
+    currencies = MarketplaceService::AvailableCurrencies::CURRENCIES
+    available_currencies = [currency].concat(currencies.select { |c| c != currency })
+
     view_locals = {
       paypal_account_email: paypal_account[:email].or_else(nil),
       order_permission_action: admin_paypal_preferences_account_create_path(),
@@ -71,6 +74,7 @@ class Admin::PaypalPreferencesController < ApplicationController
       min_commission: minimum_commission,
       min_commission_percentage: MIN_COMMISSION_PERCENTAGE,
       max_commission_percentage: MAX_COMMISSION_PERCENTAGE,
+      available_currencies: available_currencies,
       currency: currency,
       display_knowledge_base_articles: APP_CONFIG.display_knowledge_base_articles,
       knowledge_base_url: APP_CONFIG.knowledge_base_url

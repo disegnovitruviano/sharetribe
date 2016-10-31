@@ -67,4 +67,6 @@ module MarketplaceService::AvailableCurrencies
       "VA" => "EUR"
   }
 
+  CURRENCIES = ["USD"].concat(COUNTRY_CURRENCIES.values).uniq.sort
+
 end
