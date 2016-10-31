@@ -23,7 +23,8 @@ class Admin::PaypalPreferencesController < ApplicationController
         less_than_or_equal_to: MAX_COMMISSION_PERCENTAGE)
 
       validate do |prefs|
-        # TODO: validate currency
+        # TODO: validate currency is one of the available ones
+        # TODO: validate commission/size/etc. against currency
 
         if minimum_listing_price.nil? || minimum_listing_price < minimum_commission
           prefs.errors[:base] << I18n.t("admin.paypal_accounts.minimum_listing_price_below_min",
@@ -84,13 +85,14 @@ class Admin::PaypalPreferencesController < ApplicationController
   end
 
   def preferences_update
-    currency = @current_community.default_currency
+    currency = params[:paypal_preferences_form]["marketplace_currency"]
     minimum_commission = paypal_minimum_commissions_api.get(currency)
 
     paypal_prefs_form = PaypalPreferencesForm.new(
       parse_preferences(params[:paypal_preferences_form], currency).merge(minimum_commission: minimum_commission))
 
     if paypal_prefs_form.valid?
+      # TODO: save currency
       tx_settings_api.update({community_id: @current_community.id,
                               payment_gateway: :paypal,
                               payment_process: :preauthorize,
