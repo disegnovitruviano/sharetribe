@@ -63,6 +63,12 @@
                   =t("admin.paypal_accounts.set_minimum_price_and_fee")
             .row
               .col-6
+                = form.label :marketplace_currency, t("admin.paypal_accounts.marketplace_currency_label"), class: "paypal-horizontal-input-label"
+              .col-6
+                = form.select :marketplace_currency, [currency]
+
+            .row
+              .col-6
                 = form.label :minimum_listing_price, t("admin.paypal_accounts.minimum_listing_price_label"), class: "paypal-horizontal-input-label"
               .col-6
                 = form.text_field :minimum_listing_price, class: "paypal-preferences-input"

@@ -12,7 +12,8 @@ class Admin::PaypalPreferencesController < ApplicationController
     :commission_from_seller,
     :minimum_listing_price,
     :minimum_commission,
-    :minimum_transaction_fee
+    :minimum_transaction_fee,
+    :marketplace_currency
     ).with_validations do
       validates_numericality_of(
         :commission_from_seller,
@@ -22,6 +23,8 @@ class Admin::PaypalPreferencesController < ApplicationController
         less_than_or_equal_to: MAX_COMMISSION_PERCENTAGE)
 
       validate do |prefs|
+        # TODO: validate currency
+
         if minimum_listing_price.nil? || minimum_listing_price < minimum_commission
           prefs.errors[:base] << I18n.t("admin.paypal_accounts.minimum_listing_price_below_min",
                                         { minimum_commission: minimum_commission })
